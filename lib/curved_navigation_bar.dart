@@ -15,7 +15,7 @@ class CurvedNavigationBar extends StatefulWidget {
   final _LetIndexPage letIndexChange;
   final Curve animationCurve;
   final Duration animationDuration;
-  final double height;
+  final double width;
 
   CurvedNavigationBar({
     Key key,
@@ -28,12 +28,12 @@ class CurvedNavigationBar extends StatefulWidget {
     _LetIndexPage letIndexChange,
     this.animationCurve = Curves.easeOut,
     this.animationDuration = const Duration(milliseconds: 600),
-    this.height = 75.0,
+    this.width = 75.0,
   })  : letIndexChange = letIndexChange ?? ((_) => true),
         assert(items != null),
         assert(items.length >= 1),
         assert(0 <= index && index < items.length),
-        assert(0 <= height && height <= 75.0),
+        assert(0 <= width && width <= 75.0),
         super(key: key);
 
   @override
@@ -95,18 +95,20 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     Size size = MediaQuery.of(context).size;
     return Container(
       color: widget.backgroundColor,
-      height: widget.height,
+      width: widget.width,
+      height: MediaQuery.of(context).size.height,
       child: Stack(
         clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.topCenter,
         children: <Widget>[
           Positioned(
-            bottom: -40 - (75.0 - widget.height),
-            left: Directionality.of(context) == TextDirection.rtl
+            // right: -40 - (75.0 - widget.width),
+            right: -40,
+            top: Directionality.of(context) == TextDirection.rtl
                 ? null
-                : _pos * size.width,
-            right: Directionality.of(context) == TextDirection.rtl
-                ? _pos * size.width
+                : 75 + (_pos * 200),
+            bottom: Directionality.of(context) == TextDirection.rtl
+                ? 75 + (_pos * 200)
                 : null,
             width: size.width / _length,
             child: Center(
@@ -126,25 +128,28 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
               ),
             ),
           ),
+          // Positioned(
+          //   left: 0,
+          //   // right: - (75.0 - widget.width),
+          //   right: 0,
+          //   top: 0,
+          //   child: CustomPaint(
+          //     painter: NavCustomPainter(
+          //         _pos, _length, widget.color, Directionality.of(context)),
+          //     child: Container(
+          //       height: 75.0,
+          //     ),
+          //   ),
+          // ),
           Positioned(
             left: 0,
+            // bottom: 0 - (75.0 - widget.width),
             right: 0,
-            bottom: 0 - (75.0 - widget.height),
-            child: CustomPaint(
-              painter: NavCustomPainter(
-                  _pos, _length, widget.color, Directionality.of(context)),
-              child: Container(
-                height: 75.0,
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0 - (75.0 - widget.height),
+            top: 0,
             child: SizedBox(
-                height: 100.0,
-                child: Row(
+                width: 100.0,
+                height: 200.0,
+                child: Column(
                     children: widget.items.map((item) {
                   return NavButton(
                     onTap: _buttonTap,

@@ -15,10 +15,30 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: CurvedNavigationBar(
+      // body: Container(
+      //   color: Colors.blueAccent,
+      //   child: Center(
+      //     child: Column(
+      //       children: <Widget>[
+      //         Text(_page.toString(), textScaleFactor: 10.0),
+      //         RaisedButton(
+      //           child: Text('Go To Page of index 1'),
+      //           onPressed: () {
+      //             final CurvedNavigationBarState navBarState =
+      //                 _bottomNavigationKey.currentState;
+      //             navBarState.setPage(1);
+      //           },
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // )
+      body: SafeArea(
+          child: Container(
+        child: CurvedNavigationBar(
           key: _bottomNavigationKey,
           index: 0,
-          height: 50.0,
+          width: 50.0,
           items: <Widget>[
             Icon(Icons.add, size: 30),
             Icon(Icons.list, size: 30),
@@ -38,23 +58,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           },
           letIndexChange: (index) => true,
         ),
-        body: Container(
-          color: Colors.blueAccent,
-          child: Center(
-            child: Column(
-              children: <Widget>[
-                Text(_page.toString(), textScaleFactor: 10.0),
-                RaisedButton(
-                  child: Text('Go To Page of index 1'),
-                  onPressed: () {
-                    final CurvedNavigationBarState navBarState =
-                        _bottomNavigationKey.currentState;
-                    navBarState.setPage(1);
-                  },
-                )
-              ],
-            ),
-          ),
-        ));
+      )),
+    );
   }
 }
